@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; padding: 50px;">
+    <h1 style="color: #4CAF50;">🎉 Payment Successful!</h1>
+    <p style="font-size: 1.2em;">Thank you for your purchase.</p>
+
+    {% if item %}
+    <div class="card" style="display: inline-block; text-align: left; margin-top: 30px; border: 2px solid #4CAF50;">
+        <h2>Item Delivered: {{ item.title }}</h2>
+        <hr style="border: 0.5px solid #333;">
+        <p><strong>Test Account Info:</strong></p>
+        <div style="background: #000; padding: 15px; border-radius: 5px; font-family: monospace;">
+            Login: ggwp_user_{{ item.id }}<br>
+            Password: test_password_123<br>
+            Note: This is test information for the demo.
+        </div>
+        <p style="font-size: 0.9em; color: #888; margin-top: 10px;">
+            The item has been added to your inventory (test mode).
+        </p>
+    </div>
+    {% endif %}
+
+    <div style="margin-top: 40px;">
+        <a href="/"
+            style="background: #bb86fc; color: #000; padding: 15px 30px; font-weight: bold; border-radius: 5px; text-decoration: none;">
+            Return to Marketplace
+        </a>
+    </div>
+</div>
+{% endblock %}

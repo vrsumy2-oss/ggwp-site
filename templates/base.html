@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GGWP Market</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: sans-serif;
+        }
+
+        nav {
+            padding: 20px;
+            background: #1f1f1f;
+            display: flex;
+            gap: 20px;
+        }
+
+        a {
+            color: #bb86fc;
+            text-decoration: none;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid #333;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background: #1e1e1e;
+        }
+
+        button {
+            background: #bb86fc;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/login/" id="login-link">Login</a>
+        <a href="/register/" id="register-link">Register</a>
+        <a href="#" id="logout-link" style="display: none;" onclick="logout()">Logout</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <script>
+        // Global Auth Check
+        const token = localStorage.getItem('auth_token');
+        if (token) {
+            document.getElementById('login-link').style.display = 'none';
+            document.getElementById('register-link').style.display = 'none';
+            document.getElementById('logout-link').style.display = 'inline';
+        }
+
+        function logout() {
+            localStorage.removeItem('auth_token');
+            alert('Logged out successfully');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="item-detail">Loading...</div>
+
+<script>
+    async function loadItem() {
+        const pathParts = window.location.pathname.split('/');
+        const pk = pathParts[pathParts.length - 2];
+        const response = await fetch(`/api/items/${pk}/`);
+        const item = await response.json();
+
+        const container = document.getElementById('item-detail');
+        if (response.ok) {
+            const imgHtml = item.image ? `<img src="${item.image}" style="max-width:400px; border-radius:10px; margin-bottom:20px;">` : '';
+            container.innerHTML = `
+                <div style="display: flex; gap: 40px; align-items: start;">
+                    <div>${imgHtml}</div>
+                    <div>
+                        <h1>${item.title}</h1>
+                        <h2 style="color: #bb86fc;">Price: $${item.price}</h2>
+                        <p style="color: #ccc; line-height: 1.6;">${item.description}</p>
+                        <p>Seller: ${item.seller}</p>
+                        <br>
+                        <button onclick="buyItem(${item.id})" style="font-size: 1.2em; padding: 15px 40px;">Buy Now</button>
+                    </div>
+                </div>
+            `;
+        } else {
+            container.innerHTML = '<h1>Item not found</h1>';
+        }
+    }
+
+    function buyItem(id) {
+        window.location.href = `/wallet/buy/${id}/`;
+    }
+
+    loadItem();
+</script>
+{% endblock %}

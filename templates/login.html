@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Login</h1>
+<form id="login-form">
+    <input type="text" id="username" placeholder="Username" required style="padding: 10px;"><br><br>
+    <input type="password" id="password" placeholder="Password" required style="padding: 10px;"><br><br>
+    <button type="submit">Login</button>
+</form>
+<script>
+    document.getElementById('login-form').onsubmit = async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        try {
+            const response = await fetch('/auth/token/login/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('auth_token', data.auth_token);
+                alert('Login Successful!');
+                window.location.href = '/';
+            } else {
+                alert('Login Failed');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+</script>
+{% endblock %}
